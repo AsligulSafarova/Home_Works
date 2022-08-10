@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="root"></div>
+    <script>
+  const root_elem = document.querySelector(".root");
+   
+const render = (persons)=> {
+ let get_info= persons.map(({first_name, avatar})=>{
+
+    const cont_elem = document.createElement("div");
+    const p_elem = document.createElement("p");
+    const img_elem = document.createElement("img");
+
+    p_elem.innerText= first_name;
+    img_elem.src = avatar;
+     cont_elem.append(p_elem, img_elem);
+     return cont_elem; 
+
+    })
+    
+    root_elem.append(...get_info);
+
+   }
+fetch(`https://reqres.in/api/users`)
+.then(resp=>resp.json())
+.then(json=>render(json.data));
+
+
+/* fetch(`https://reqres.in/api/users`)
+.then(resp=>resp.json())
+.then(json=>console.log(json))
+ */
+
+
+    </script>
+    
+</body>
+</html>

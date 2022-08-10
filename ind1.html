@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+   .root{
+    width: 850px;
+    height: 100%;
+    margin: 40px auto;
+   }
+   img{
+    width: 80px;
+    border: 3px solid red;
+   }
+   button{
+    width: 80px;
+   }
+
+    </style>
+</head>
+<body>
+    <div class="root"></div>
+
+    <div class="trigger">
+        <button>1</button>
+        <button>2</button>
+    </div>
+    <script>
+        
+        const root_elem = document.querySelector(".root");
+        const [left_btn, right_btn] = document.querySelectorAll(".trigger button");
+
+        let render = (persons)=>{
+            root_elem.innerText="";
+
+            const get_persons =persons.map(({first_name, avatar})=>{
+
+                const container = document.createElement("div");
+                const p_elem = document.createElement("p");
+                const img_elem = document.createElement("img");
+
+                p_elem.innerText= first_name;
+                img_elem.src= avatar;
+
+                container.append(p_elem, img_elem)
+                return container
+
+            })
+
+                   root_elem.append(...get_persons);
+
+        };
+
+        left_btn.addEventListener("click", ()=>{
+fetch(`https://reqres.in/api/users?page=1`)
+.then(resp => resp.json())
+.then(json =>render(json.data))
+
+
+        })
+
+right_btn.addEventListener("click", ()=>{
+
+fetch(`https://reqres.in/api/users?page=2`)
+.then(resp =>resp.json())
+.then( json => render(json.data)) 
+
+})
+
+
+
+
+    </script>
+    
+</body>
+</html>
